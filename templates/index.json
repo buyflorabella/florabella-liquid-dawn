@@ -17,6 +17,16 @@
         "color_scheme": "scheme-5"
       }
     },
+    "bfbella_shop": {
+      "type": "bfbella-shop",
+      "settings": {
+        "heading": "Shop our products",
+        "collection": "all",
+        "products_to_show": 6,
+        "columns_desktop": 3,
+        "color_scheme": "scheme-1"
+      }
+    },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
@@ -48,6 +58,7 @@
   },
   "order": [
     "image_banner",
+    "bfbella_shop",
     "featured_collection"
   ]
 }
