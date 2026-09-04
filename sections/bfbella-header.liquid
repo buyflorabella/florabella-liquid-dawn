@@ -535,6 +535,35 @@
   }
 
   /*
+    BFBella addition: pass-1 parity restore, round 2 (2026-09-04). DXB confirmed
+    pass-1 (the from-scratch build, commit 1c32aca) "nailed it" -- these rules
+    port pass-1's remaining visual behaviors that didn't carry over into the
+    copy-modify rebuild: icon hover feedback, text-fallback logo typography,
+    scroll-triggered logo shrink, and the mobile drawer's brand gradient.
+  */
+  .header__heading-link .h2 {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    color: rgb(var(--color-foreground));
+  }
+
+  .header__icon:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    transform: scale(1.1);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+
+  .section-header.scrolled-past-header .header__heading-logo-wrapper {
+    width: 75%;
+  }
+
+  #menu-drawer {
+    background: linear-gradient(180deg, var(--bfbella-overlay-start) 0%, var(--bfbella-overlay-end) 100%);
+  }
+
+  /*
     BFBella addition: independent menu-position control (left/center/right).
     Native Dawn ties nav placement to logo_position with no separate control --
     reuses Dawn's own header--top-center centering mechanism (justify-self +
