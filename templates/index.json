@@ -2,65 +2,18 @@
   "sections": {
     "image_banner": {
       "type": "bfbella-hero",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Wake Up Your Soil Today",
-            "heading_size": "h0"
-          }
-        },
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "Bio trace minerals is an organic, ancient, formed mineral deposit that is quarried, composted and refined to bring all the natural microbes and biology to life.",
-            "text_style": "subtitle"
-          }
-        },
-        "callout": {
-          "type": "callout",
-          "settings": {
-            "text": "<p><strong>Flora Bella Living trace mineral</strong> is made from an ancient deposit of plant coral and animal life from thousands and thousands of years ago that was encapsulated in an iron, preserving all the naturally occurring biology such as beneficial mycorrhizal fungi, a diverse amount of amino acids, and other occurring goodies with our proprietary blend to bring the perfect balance for micronutrition and optimal soil health.</p>"
-          }
-        },
-        "checkmarks": {
-          "type": "checkmarks",
-          "settings": {
-            "item_1": "Over seventy trace minerals",
-            "item_2": "Loved by organic growers",
-            "item_3": "From farmers to you"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop Bio Trace Mix",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": false,
-            "button_label_2": "See Real Grower Results",
-            "button_link_2": "/pages/community",
-            "button_style_secondary_2": true
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text",
-        "callout",
-        "checkmarks",
-        "button"
-      ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-4",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "show_buy_now_pill": true,
+        "buy_now_label": "Buy Now",
+        "buy_now_link": "shopify://collections/all",
+        "heading": "Wake Up Your Soil Today",
+        "subheading": "Bio trace minerals is an organic, ancient, formed mineral deposit that is quarried, composted and refined to bring all the natural microbes and biology to life.",
+        "callout_text": "<p><strong>Flora Bella Living trace mineral</strong> is made from an ancient deposit of plant coral and animal life from thousands and thousands of years ago that was encapsulated in an iron, preserving all the naturally occurring biology such as beneficial mycorrhizal fungi, a diverse amount of amino acids, and other occurring goodies with our proprietary blend to bring the perfect balance for micronutrition and optimal soil health.</p>",
+        "checkmarks": "Over seventy trace minerals\nLoved by organic growers\nFrom farmers to you",
+        "button_label_1": "Shop Bio Trace Mix",
+        "button_link_1": "shopify://collections/all",
+        "button_label_2": "See Real Grower Results",
+        "button_link_2": "/pages/community"
       }
     },
     "featured_collection": {
