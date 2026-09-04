@@ -4,13 +4,18 @@
   earlier copy-modify-native-image-banner approach for this section only).
   Structure and CSS ported from the live Hydrogen reference
   (buyflorabella_restore/dev/frontend/app/componentsMockup2/components/
-  HeroSection.tsx + index.css), adapted to Liquid/native Shopify color
-  settings per CLAUDE.md (colors must be Shopify color settings, not
-  hardcoded hex; media must be Shopify Files via image_picker, never a
-  repo asset).
+  HeroSection.tsx + index.css).
+
+  Colors (DXB, 2026-09-04: "use the standard shopify color selectors, no
+  custom CSS for colors") use Dawn's own color_scheme picker -- the same
+  mechanism every native Dawn section uses -- instead of bespoke per-field
+  color settings. scheme-5 (unused anywhere else in this theme -- verified,
+  unlike scheme-2 which drives every product/collection/blog card) is
+  repurposed to carry the hero's light background / dark text / green
+  button values, same precedent as scheme-4 for the header.
 {% endcomment %}
 
-<section class="bfbella-hero" id="BfbellaHero-{{ section.id }}">
+<section class="bfbella-hero color-{{ section.settings.color_scheme }}" id="BfbellaHero-{{ section.id }}">
   <div class="bfbella-hero__blobs" aria-hidden="true">
     <span class="bfbella-hero__blob bfbella-hero__blob--1"></span>
     <span class="bfbella-hero__blob bfbella-hero__blob--2"></span>
@@ -96,7 +101,7 @@
   #BfbellaHero-{{ section.id }} {
     position: relative;
     overflow: hidden;
-    background: linear-gradient(180deg, {{ section.settings.bg_gradient_start }} 0%, {{ section.settings.bg_gradient_end }} 100%);
+    background: rgb(var(--color-background));
     padding: 4rem 0;
   }
 
@@ -119,7 +124,7 @@
     left: 5%;
     width: 26rem;
     height: 26rem;
-    background: {{ section.settings.accent_color }};
+    background: rgb(var(--color-button));
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__blob--2 {
@@ -127,7 +132,7 @@
     right: 5%;
     width: 32rem;
     height: 32rem;
-    background: {{ section.settings.accent_earth_color }};
+    background: rgb(var(--color-shadow));
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__inner {
@@ -156,8 +161,8 @@
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__eyebrow {
     display: inline-block;
-    background: {{ section.settings.accent_color }}1a;
-    border: 1px solid {{ section.settings.accent_color }}4d;
+    background: rgba(var(--color-button), 0.1);
+    border: 1px solid rgba(var(--color-button), 0.3);
     padding: 0.5rem;
     border-radius: 999px;
     margin-bottom: 1.5rem;
@@ -169,18 +174,18 @@
     gap: 0.5rem;
     padding: 0.9rem 2rem;
     border-radius: 999px;
-    background: linear-gradient(135deg, {{ section.settings.accent_color }} 0%, {{ section.settings.accent_dark_color }} 100%);
-    color: #ffffff;
+    background: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
     font-weight: 700;
     font-size: 1.4rem;
     text-decoration: none;
-    box-shadow: 0 10px 25px -5px {{ section.settings.accent_color }}66;
+    box-shadow: 0 10px 25px -5px rgba(var(--color-button), 0.4);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__pill:hover {
     transform: scale(1.08);
-    box-shadow: 0 20px 35px -5px {{ section.settings.accent_color }}80;
+    box-shadow: 0 20px 35px -5px rgba(var(--color-button), 0.5);
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__heading {
@@ -189,7 +194,7 @@
     letter-spacing: -0.03em;
     line-height: 0.95;
     font-size: 4.4rem;
-    color: {{ section.settings.heading_color }};
+    color: rgb(var(--color-foreground));
     margin: 0 0 1.5rem;
   }
 
@@ -209,21 +214,21 @@
     font-size: 2rem;
     font-weight: 500;
     line-height: 1.4;
-    color: {{ section.settings.body_color }};
+    color: rgba(var(--color-foreground), 0.85);
     margin: 0 0 1.5rem;
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__body {
     font-size: 1.6rem;
     line-height: 1.6;
-    color: {{ section.settings.body_color }};
+    color: rgba(var(--color-foreground), 0.85);
     max-width: 55rem;
     margin: 0 0 1.5rem;
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__callout {
-    background: {{ section.settings.accent_color }}0d;
-    border: 1px solid {{ section.settings.accent_color }}33;
+    background: rgba(var(--color-button), 0.05);
+    border: 1px solid rgba(var(--color-button), 0.2);
     border-radius: 1.5rem;
     padding: 1.5rem;
     margin: 0 0 2.5rem;
@@ -233,7 +238,7 @@
   #BfbellaHero-{{ section.id }} .bfbella-hero__callout p {
     font-size: 1.3rem;
     line-height: 1.6;
-    color: {{ section.settings.body_color }};
+    color: rgba(var(--color-foreground), 0.85);
     margin: 0;
   }
 
@@ -257,25 +262,25 @@
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__button--primary {
-    background: linear-gradient(135deg, {{ section.settings.accent_color }} 0%, {{ section.settings.accent_dark_color }} 100%);
-    color: #ffffff;
-    box-shadow: 0 10px 25px -5px {{ section.settings.accent_color }}66;
+    background: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    box-shadow: 0 10px 25px -5px rgba(var(--color-button), 0.4);
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__button--primary:hover {
     transform: scale(1.08);
-    box-shadow: 0 20px 35px -5px {{ section.settings.accent_color }}80;
+    box-shadow: 0 20px 35px -5px rgba(var(--color-button), 0.5);
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__button--secondary {
-    background: {{ section.settings.button_secondary_bg }};
-    border: 1px solid {{ section.settings.button_secondary_border }};
-    color: {{ section.settings.heading_color }};
+    background: rgb(var(--color-secondary-button));
+    border: 1px solid rgba(var(--color-secondary-button-text), 0.3);
+    color: rgb(var(--color-secondary-button-text));
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__button--secondary:hover {
     transform: scale(1.05);
-    border-color: {{ section.settings.accent_color }}80;
+    border-color: rgb(var(--color-secondary-button-text));
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__checkmarks {
@@ -292,11 +297,11 @@
     align-items: center;
     gap: 0.8rem;
     font-size: 1.4rem;
-    color: {{ section.settings.body_color }};
+    color: rgba(var(--color-foreground), 0.85);
   }
 
   #BfbellaHero-{{ section.id }} .bfbella-hero__checkmarks svg {
-    color: {{ section.settings.accent_color }};
+    color: rgb(var(--color-button));
     flex-shrink: 0;
   }
 
@@ -316,7 +321,7 @@
   #BfbellaHero-{{ section.id }} .bfbella-hero__media-glow {
     position: absolute;
     inset: -1.5rem;
-    background: linear-gradient(135deg, {{ section.settings.accent_color }}33, {{ section.settings.accent_earth_color }}33);
+    background: rgba(var(--color-button), 0.2);
     border-radius: 2.5rem;
     filter: blur(30px);
     z-index: 0;
@@ -329,7 +334,7 @@
     width: 100%;
     height: auto;
     border-radius: 1.5rem;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 25px 50px -12px rgba(var(--color-shadow), 0.25);
     display: block;
   }
 
@@ -434,58 +439,10 @@
       "content": "Colors"
     },
     {
-      "type": "color",
-      "id": "bg_gradient_start",
-      "default": "#fafaf9",
-      "label": "Background gradient start"
-    },
-    {
-      "type": "color",
-      "id": "bg_gradient_end",
-      "default": "#f0f0ee",
-      "label": "Background gradient end"
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "default": "#111827",
-      "label": "Heading color"
-    },
-    {
-      "type": "color",
-      "id": "body_color",
-      "default": "#374151",
-      "label": "Body text color"
-    },
-    {
-      "type": "color",
-      "id": "accent_color",
-      "default": "#7cb342",
-      "label": "Accent color"
-    },
-    {
-      "type": "color",
-      "id": "accent_dark_color",
-      "default": "#558b2f",
-      "label": "Accent color (gradient end)"
-    },
-    {
-      "type": "color",
-      "id": "accent_earth_color",
-      "default": "#8b6f47",
-      "label": "Secondary accent (earth tone)"
-    },
-    {
-      "type": "color",
-      "id": "button_secondary_bg",
-      "default": "#ffffff",
-      "label": "Secondary button background"
-    },
-    {
-      "type": "color",
-      "id": "button_secondary_border",
-      "default": "#e5e7eb",
-      "label": "Secondary button border"
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-5"
     }
   ],
   "presets": [

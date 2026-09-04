@@ -13,7 +13,8 @@
         "button_label_1": "Shop Bio Trace Mix",
         "button_link_1": "shopify://collections/all",
         "button_label_2": "See Real Grower Results",
-        "button_link_2": "/pages/community"
+        "button_link_2": "/pages/community",
+        "color_scheme": "scheme-5"
       }
     },
     "featured_collection": {
