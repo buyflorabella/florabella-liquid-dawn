@@ -29,6 +29,97 @@
   }
 {%- endstyle -%}
 
+{% comment %}
+  BFBella layout: production's hero is a real two-column split (text left,
+  product photo right), not an overlay-on-background-image banner like
+  native image-banner. Scoped to this instance's own #Banner-{{ section.id }}
+  ID so it can't affect any other image-banner section in the theme.
+{% endcomment %}
+<style>
+  @media screen and (min-width: 990px) {
+    #Banner-{{ section.id }} {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 3rem;
+      min-height: auto;
+      padding: 4rem 0;
+    }
+    #Banner-{{ section.id }} .banner__media {
+      position: static;
+      grid-column: 2;
+      height: auto;
+      aspect-ratio: 4 / 5;
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+    #Banner-{{ section.id }} .banner__media img {
+      height: 100%;
+      object-fit: cover;
+    }
+    #Banner-{{ section.id }} .banner__content {
+      position: static;
+      grid-column: 1;
+      min-height: auto;
+    }
+    #Banner-{{ section.id }} .banner__box {
+      text-align: left;
+      max-width: none;
+    }
+  }
+
+  #Banner-{{ section.id }} .bfbella-hero__buy-now {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 999px;
+    background: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+    font-weight: 700;
+    font-size: 1.4rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+  }
+
+  #Banner-{{ section.id }} .bfbella-hero__buy-now:hover {
+    transform: scale(1.08);
+  }
+
+  #Banner-{{ section.id }} .bfbella-hero__callout {
+    border: 1px solid rgba(var(--color-foreground), 0.2);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    max-width: 55rem;
+  }
+
+  #Banner-{{ section.id }} .bfbella-hero__checkmarks {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  #Banner-{{ section.id }} .bfbella-hero__checkmarks li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-size: 1.4rem;
+  }
+
+  #Banner-{{ section.id }} .bfbella-hero__checkmarks svg {
+    color: rgb(var(--color-button));
+    flex-shrink: 0;
+  }
+</style>
+
 {%- liquid
   assign full_width = '100vw'
   assign widths = '375, 550, 750, 1100, 1500, 1780, 2000, 3000, 3840'
@@ -117,6 +208,11 @@
   {%- endif -%}
   <div class="banner__content banner__content--{{ section.settings.desktop_content_position }} page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
     <div class="banner__box content-container content-container--full-width-mobile color-{{ section.settings.color_scheme }} gradient">
+      {%- if section.settings.show_buy_now_pill -%}
+        <a href="{{ section.settings.buy_now_link | default: 'shopify://collections/all' }}" class="bfbella-hero__buy-now">
+          {{ section.settings.buy_now_label | default: 'Buy Now' }}
+        </a>
+      {%- endif -%}
       {%- for block in section.blocks -%}
         {%- case block.type -%}
           {%- when 'heading' -%}
@@ -130,6 +226,23 @@
             <div class="banner__text rte {{ block.settings.text_style }}" {{ block.shopify_attributes }}>
               <p>{{ block.settings.text }}</p>
             </div>
+          {%- when 'callout' -%}
+            <div class="bfbella-hero__callout rte" {{ block.shopify_attributes }}>
+              {{ block.settings.text }}
+            </div>
+          {%- when 'checkmarks' -%}
+            <ul class="bfbella-hero__checkmarks" {{ block.shopify_attributes }}>
+              {%- for i in (1..3) -%}
+                {%- assign item_key = 'item_' | append: i -%}
+                {%- assign item = block.settings[item_key] -%}
+                {%- if item != blank -%}
+                  <li>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                    <span>{{ item }}</span>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
           {%- when 'buttons' -%}
             <div
               class="banner__buttons{% if block.settings.button_label_1 != blank and block.settings.button_label_2 != blank %} banner__buttons--multiple{% endif %}"
@@ -358,6 +471,27 @@
       "id": "show_text_below",
       "default": true,
       "label": "t:sections.image-banner.settings.show_text_below.label"
+    },
+    {
+      "type": "header",
+      "content": "BFBella additions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_buy_now_pill",
+      "default": true,
+      "label": "Show \"Buy Now\" pill"
+    },
+    {
+      "type": "text",
+      "id": "buy_now_label",
+      "default": "Buy Now",
+      "label": "Buy Now pill label"
+    },
+    {
+      "type": "url",
+      "id": "buy_now_link",
+      "label": "Buy Now pill link"
     }
   ],
   "blocks": [
@@ -485,6 +619,40 @@
           "label": "t:sections.image-banner.blocks.buttons.settings.button_style_secondary_2.label"
         }
       ]
+    },
+    {
+      "type": "callout",
+      "name": "BFBella — Callout",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Callout text"
+        }
+      ]
+    },
+    {
+      "type": "checkmarks",
+      "name": "BFBella — Checkmarks",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "item_1",
+          "label": "Item 1"
+        },
+        {
+          "type": "text",
+          "id": "item_2",
+          "label": "Item 2"
+        },
+        {
+          "type": "text",
+          "id": "item_3",
+          "label": "Item 3"
+        }
+      ]
     }
   ],
   "presets": [
@@ -496,6 +664,12 @@
         },
         {
           "type": "text"
+        },
+        {
+          "type": "callout"
+        },
+        {
+          "type": "checkmarks"
         },
         {
           "type": "buttons"
