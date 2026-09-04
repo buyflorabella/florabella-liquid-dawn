@@ -508,14 +508,18 @@
   Standards for why this is scoped as narrowly as it is.
 {% endcomment %}
 <style>
+  /*
+    BFBella fix, 2026-09-04: the 0.75-opacity + blur "glass" background was
+    blending with Dawn's default white body background (nothing else renders
+    behind the header at rest -- verified via computed styles: rgba(10,10,10,0.75)
+    over rgb(255,255,255) body = solid mid-grey, not brand near-black). DXB's
+    regression check failed on this ("NO grey header"). Fixed to a fully opaque
+    background so the header is always solid scheme-4 near-black, regardless of
+    what's behind it.
+  */
   .header-wrapper {
-    background: rgba(var(--color-background), 0.75);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgb(var(--color-background));
     transition: background 0.3s ease;
-  }
-  .section-header.scrolled-past-header .header-wrapper {
-    background: rgba(var(--color-background), 0.85);
   }
   .header__icon--menu,
   .header__icon--search {
