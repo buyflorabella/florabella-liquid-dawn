@@ -509,17 +509,22 @@
 {% endcomment %}
 <style>
   /*
-    BFBella fix, 2026-09-04: the 0.75-opacity + blur "glass" background was
-    blending with Dawn's default white body background (nothing else renders
-    behind the header at rest -- verified via computed styles: rgba(10,10,10,0.75)
-    over rgb(255,255,255) body = solid mid-grey, not brand near-black). DXB's
-    regression check failed on this ("NO grey header"). Fixed to a fully opaque
-    background so the header is always solid scheme-4 near-black, regardless of
-    what's behind it.
+    BFBella note, 2026-09-04 (revised): reverted an earlier same-day "fix" that
+    made this opaque. Checked production's own computed styles directly
+    (buyflorabella.com's <header>) and confirmed it uses this EXACT value --
+    rgba(10, 10, 10, 0.75) with backdrop-filter blur -- which reads as a
+    dark-charcoal-grey blend against its light hero background, not a bug.
+    The grey look is correct/production-matching; the earlier "fix" to solid
+    opaque was itself the regression. Restored the original glass treatment.
   */
   .header-wrapper {
-    background: rgb(var(--color-background));
+    background: rgba(var(--color-background), 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     transition: background 0.3s ease;
+  }
+  .section-header.scrolled-past-header .header-wrapper {
+    background: rgba(var(--color-background), 0.85);
   }
   .header__icon--menu,
   .header__icon--search {
