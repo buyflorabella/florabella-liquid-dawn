@@ -498,6 +498,40 @@
   </script>
 {%- endif -%}
 
+{% comment %}
+  BFBella brand treatment, layered on top of the native header above.
+  Pass-1 look restored 2026-09-04, this time as an addition to the native
+  copy rather than a from-scratch rebuild -- see CLAUDE.md Shopify-Native
+  Standards for why this is scoped as narrowly as it is.
+{% endcomment %}
+<style>
+  .header-wrapper {
+    background: rgba(var(--color-background), 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    transition: background 0.3s ease;
+  }
+  .section-header.scrolled-past-header .header-wrapper {
+    background: rgba(var(--color-background), 0.85);
+  }
+  .header__icon--menu,
+  .header__icon--search {
+    color: rgb(var(--color-button));
+  }
+  .header__icon--account,
+  .header__icon--cart {
+    color: rgb(var(--color-foreground));
+  }
+  .list-menu__item--link {
+    color: rgb(var(--color-foreground));
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  .list-menu__item--link:hover {
+    color: rgb(var(--color-button));
+    transform: translateY(-2px);
+  }
+</style>
+
 {% schema %}
 {
   "name": "BFBella — Header",
