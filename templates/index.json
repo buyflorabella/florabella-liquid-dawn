@@ -1,7 +1,7 @@
 {
   "sections": {
     "image_banner": {
-      "type": "image-banner",
+      "type": "bfbella-hero",
       "blocks": {
         "heading": {
           "type": "heading",
